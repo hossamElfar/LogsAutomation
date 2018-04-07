@@ -34,7 +34,6 @@ public class PipeLine {
      * @throws ClassNotFoundException
      */
     public void init(HashMap<String, String> args) throws IOException, ParseException, SQLException, ClassNotFoundException {
-//  java -cp "parser.jar" com.ef.Parser --accesslog=/path/to/file --startDate=2017-01-01.13:00:00 --duration=hourly --threshold=100 --dbusername=root --password= --dbHost=locahost --dbName=WalletHub
         logger.info("Reading file status --> [PROCESSING]");
         ParseFile parseFile = new ParseFile(args.get("accesslog"));
         logger.info("Reading file status --> [DONE]");
@@ -46,7 +45,7 @@ public class PipeLine {
         dbHandler.updateQuery(Utiles.CREATE_TABLE_LOGS_IF_NOT_EXIST_QUERY);
         dbHandler.updateQuery(Utiles.CREATE_TABLE_BLOCKED_IF_NOT_EXIST_QUERY);
         logger.info("Inserting " + entries.size() + " logs into MYSQl DB, this may take some time, be patient...");
-//        dbHandler.insertMany(entries);
+        dbHandler.insertMany(entries);
         logger.info("Inserting logs status --> [DONE]");
         logger.info("Executing the required query status --> [Processing]");
         ResultSet resultSet = dbHandler.execQuery(Utiles.getThresholdQuery(args));
